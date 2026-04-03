@@ -4,24 +4,25 @@ import { useInView } from '../hooks/useInView'
 import { FiMail, FiGithub, FiLinkedin, FiPhone, FiSend } from 'react-icons/fi'
 
 const socials = [
-  { icon: FiGithub, label: 'GitHub', value: '@anupamxy', href: 'https://github.com/anupamxy', color: 'var(--text-bright)' },
-  { icon: FiLinkedin, label: 'LinkedIn', value: 'anupamsingh3', href: 'https://www.linkedin.com/in/anupamsingh3/', color: '#0a66c2' },
-  { icon: FiMail, label: 'Email', value: 'anupam2k321@gmail.com', href: 'mailto:anupam2k321@gmail.com', color: 'var(--purple)' },
-  { icon: FiPhone, label: 'Phone', value: '+91 8187928603', href: 'tel:+918187928603', color: 'var(--green)' },
+  { icon: FiGithub,   label: 'GitHub',   value: '@anupamxy',             href: 'https://github.com/anupamxy',                  color: 'var(--text-bright)' },
+  { icon: FiLinkedin, label: 'LinkedIn', value: 'anupamsingh3',           href: 'https://www.linkedin.com/in/anupamsingh3/',    color: '#0a66c2' },
+  { icon: FiMail,     label: 'Email',    value: 'anupam2k321@gmail.com',  href: 'mailto:anupam2k321@gmail.com',                 color: 'var(--purple)' },
+  { icon: FiPhone,    label: 'Phone',    value: '+91 8187928603',          href: 'tel:+918187928603',                            color: 'var(--green)' },
 ]
 
 export default function Contact() {
   const [ref, inView] = useInView()
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm]     = useState({ name: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`)
+    const subject = encodeURIComponent(`[Portfolio] Message from ${form.name}`)
     const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`)
-    window.open(`mailto:anupam2k321@gmail.com?subject=${subject}&body=${body}`)
+    window.open(`https://mail.google.com/mail/?view=cm&to=anupam2k321@gmail.com&su=${subject}&body=${body}`, '_blank')
     setSent(true)
-    setTimeout(() => setSent(false), 3000)
+    setForm({ name: '', email: '', message: '' })
+    setTimeout(() => setSent(false), 4000)
   }
 
   return (
@@ -41,6 +42,7 @@ export default function Contact() {
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '48px', alignItems: 'start' }}>
+
           {/* Social links */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -102,7 +104,7 @@ export default function Contact() {
             </h3>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {[
-                { name: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+                { name: 'name',  label: 'Name',  type: 'text',  placeholder: 'Your name' },
                 { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
               ].map(field => (
                 <div key={field.name}>
@@ -164,9 +166,14 @@ export default function Contact() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="btn-primary"
-                style={{ justifyContent: 'center' }}
+                style={{
+                  justifyContent: 'center',
+                  background: sent
+                    ? 'linear-gradient(135deg, var(--green), var(--green)99)'
+                    : undefined,
+                }}
               >
-                <span>{sent ? '✓ Opening Mail App...' : 'Send Message'}</span>
+                <span>{sent ? '✓ Gmail Opened!' : 'Send Message'}</span>
                 <FiSend />
               </motion.button>
             </form>
@@ -175,11 +182,7 @@ export default function Contact() {
       </div>
 
       {/* Footer */}
-      <div style={{
-        borderTop: '1px solid var(--border)',
-        padding: '32px 24px',
-        textAlign: 'center',
-      }}>
+      <div style={{ borderTop: '1px solid var(--border)', padding: '32px 24px', textAlign: 'center' }}>
         <p style={{ fontSize: '14px', color: 'var(--text)', fontFamily: 'var(--mono)' }}>
           Designed & Built by{' '}
           <span style={{ color: 'var(--purple)', fontWeight: 600 }}>Anupam Singh</span>
